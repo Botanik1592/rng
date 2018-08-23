@@ -4,10 +4,6 @@ require 'sinatra/form_helpers'
 require 'sinatra/activerecord'
 require 'net/ftp'
 
-configure :development do
-  set :database, {adapter: 'postgresql', encoding: 'unicode', database: 'telegram_bot_test_dev', pool: 2, host: ENV['FTP_HOST'], port: 5432, username: ENV['FTP_USER'], password: ENV['FTP_PASS']}
-end
-
 configure :production do
   set :database, {adapter: 'postgresql', encoding: 'unicode', database: 'telegram_bot_test_dev', pool: 2, host: ENV['FTP_HOST'], port: 5432, username: ENV['FTP_USER'], password: ENV['FTP_PASS']}
 end
@@ -57,9 +53,15 @@ get '/download' do
   book = Book.find(params[:book].to_i)
   ftp = Net::FTP.new('188.243.135.145')
   ftp.login
-  ftp.getbinaryfile("#{book.filename}", "public/#{book.filename}")
-  send_file "public/#{book.filename}", :type => 'application/zip',
-                                       :disposition => 'attachment',
-                                       :filename => book.filename,
-                                       :stream => false
+  begin
+    ftp.getbinaryfile("#{book.filename}", "public/#{book.filename}")
+    send_file "public/#{book.filename}", :type => 'application/zip',
+                                         :disposition => 'attachment',
+                                         :filename => book.filename,
+                                         :stream => false
+  rescue
+    book.destroy
+    Mix.find_by(book_id: "#{params[:book]}").destroy
+    p "Файл с этой книгой в данный момент недоступен. Вернитесь назад и попробуйте другой."
+  end
 end
