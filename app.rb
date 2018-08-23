@@ -9,7 +9,7 @@ configure :development do
 end
 
 configure :production do
-  set :database, {adapter: 'postgresql', encoding: 'unicode', database: 'telegram_bot_test_prod', pool: 2, host: ENV['FTP_HOST'], port: 5432, username: ENV['FTP_USER'], password: ENV['FTP_PASS']}
+  set :database, {adapter: 'postgresql', encoding: 'unicode', database: 'telegram_bot_test_dev', pool: 2, host: ENV['FTP_HOST'], port: 5432, username: ENV['FTP_USER'], password: ENV['FTP_PASS']}
 end
 
 class Book < ActiveRecord::Base
