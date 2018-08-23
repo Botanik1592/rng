@@ -2,11 +2,6 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/form_helpers'
 require 'sinatra/activerecord'
-require 'byebug'
-require 'pry-byebug'
-require 'pry-doc'
-require 'pry-rails'
-require 'pry-remote'
 require 'net/ftp'
 
 configure :development do
