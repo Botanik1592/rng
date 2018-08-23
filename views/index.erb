@@ -41,7 +41,7 @@
             <h2>Книги:</h2>
             <ul>
                 <% @books.each do |book| %>
-                    <li><a href="/?author=<%= book.author_id %>"><%= "#{book.author_name.split(' ').map{ |b| b.capitalize }.join(' ')}" %></a><%= "#{book.book_title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> - <a href="/download?book=<%= book.book_id %>">Скачать</a></li>
+                    <li><a href="/?author=<%= book.author_id %>"><%= "#{book.author_name.split(' ').map{ |b| b.capitalize }.join(' ')}" %></a> - <%= "#{book.book_title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> - <a href="/download?book=<%= book.book_id %>">Скачать</a></li>
                 <% end %>
             </ul>
         </div>
