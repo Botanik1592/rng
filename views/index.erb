@@ -54,6 +54,17 @@
         </form>
     </div>
 
+    <% if @author.nil? && @books.nil? %>
+        <div class="container-fluid">
+            <h2>Самые популярные книги:</h2>
+            <ol>
+                <% @popular_books.each do |book| %>
+                    <li><a href="/?author=<%= book.author_id %>"><%= "#{book.author.search_name.split(' ').map{ |b| b.capitalize }.join(' ')}" %></a> - <%= "#{book.title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> - <a href="/download?book=<%= book.id %>">Скачать</a></li>
+                <% end %>
+            </ol>
+        </div>
+    <% end %>
+
     <% if @authors %>
         <div class="container-fluid">
             <h2>Авторы:</h2>

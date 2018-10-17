@@ -24,6 +24,7 @@ get '/' do
     @author = Author.find(params[:author].to_i)
     erb :author
   else
+    @popular_books = Book.where("d_count > 0").order('d_count desc').limit(10)
     erb :index
   end
 end
@@ -55,11 +56,11 @@ get '/download' do
   ftp.login
   begin
     ftp.getbinaryfile("#{book.filename}", "public/#{book.filename}")
+    book.update(d_count: book.d_count+1)
     send_file "public/#{book.filename}", :type => 'application/zip',
                                          :disposition => 'attachment',
                                          :filename => book.filename,
                                          :stream => false
-    book.update(d_count: book.d_count+1)
   rescue
     book.destroy
     Mix.find_by(book_id: "#{params[:book]}").destroy
