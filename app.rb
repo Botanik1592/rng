@@ -59,6 +59,7 @@ get '/download' do
                                          :disposition => 'attachment',
                                          :filename => book.filename,
                                          :stream => false
+    book.update(d_count: book.d_count+1)
   rescue
     book.destroy
     Mix.find_by(book_id: "#{params[:book]}").destroy
