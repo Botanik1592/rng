@@ -75,7 +75,20 @@
             <h2>Самые популярные книги:</h2>
             <ol>
                 <% @popular_books.each do |book| %>
-                    <li><a href="/?author=<%= book.author_id %>"><%= "#{book.author.search_name.split(' ').map{ |b| b.capitalize }.join(' ')}" %></a> - <%= "#{book.title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> - <a href="/download?book=<%= book.id %>">Скачать</a></li>
+                    <li>
+                        <a href="/?author=<%= book.author_id %>"><%= "#{book.author.search_name.split(' ').map{ |b| b.capitalize }.join(' ')}" %></a> -
+                        <%= "#{book.title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> -
+                        <a href="/download?book=<%= book.id %>">Скачать</a></li>
+                        <% if book.info != '' && !book.info.nil? %>
+                            <p style="background-color: #e3edef; padding: 10px;">
+                                <font style="font-size: 11pt;">
+                                    <%= "#{book.info}" %>
+                                </font>
+                            </p>
+                        <% else %>
+                            <p style="padding: 10px;">
+                            </p>
+                        <% end %>
                 <% end %>
             </ol>
         </div>
@@ -97,7 +110,19 @@
             <h2>Книги:</h2>
             <ul>
                 <% @books.each do |book| %>
-                    <li><a href="/?author=<%= book.author_id %>"><%= "#{book.author_name.split(' ').map{ |b| b.capitalize }.join(' ')}" %></a> - <%= "#{book.book_title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> - <a href="/download?book=<%= book.book_id %>">Скачать</a></li>
+                    <li>
+                        <a href="/?author=<%= book.author_id %>"><%= "#{book.author_name.split(' ').map{ |b| b.capitalize }.join(' ')}" %></a> - <%= "#{book.book_title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> - <a href="/download?book=<%= book.book_id %>">Скачать</a>
+                        <% if Book.find(book.book_id).info != '' && !Book.find(book.book_id).info.nil? %>
+                            <p style="background-color: #e3edef; padding: 10px;">
+                                <font style="font-size: 11pt;">
+                                    <%= "#{Book.find(book.book_id).info}" %>
+                                </font>
+                            </p>
+                        <% else %>
+                            <p style="padding: 10px;">
+                            </p>
+                        <% end %>
+                    </li>
                 <% end %>
             </ul>
         </div>

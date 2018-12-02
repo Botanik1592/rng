@@ -1,2 +1,3 @@
 /config/database.yml
 /public/*.fb2
+.vscode

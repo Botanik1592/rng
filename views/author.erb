@@ -74,6 +74,16 @@
         <ul>
             <% @author.books.each do |book| %>
                 <li><%= "#{book.title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> - <a href="/download?book=<%= book.id %>">Скачать</a></li>
+                <% if book.info != '' && !book.info.nil? %>
+                    <p style="background-color: #e3edef; padding: 10px;">
+                        <font style="font-size: 11pt;">
+                            <%= "#{book.info}" %>
+                        </font>
+                    </p>
+                <% else %>
+                    <p style="padding: 10px;">
+                    </p>
+                <% end %>
             <% end %>
         </ul>
     </div>
