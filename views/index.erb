@@ -112,10 +112,10 @@
                 <% @books.each do |book| %>
                     <li>
                         <a href="/?author=<%= book.author_id %>"><%= "#{book.author_name.split(' ').map{ |b| b.capitalize }.join(' ')}" %></a> - <%= "#{book.book_title.split(' ').map{ |b| b.capitalize }.join(' ')}" %> - <a href="/download?book=<%= book.book_id %>">Скачать</a>
-                        <% if Book.find(book.book_id).info != '' && !Book.find(book.book_id).info.nil? %>
+                        <% if book.info != '' && !book.info.nil? %>
                             <p style="background-color: #e3edef; padding: 10px;">
                                 <font style="font-size: 11pt;">
-                                    <%= "#{Book.find(book.book_id).info}" %>
+                                    <%= "#{book.info}" %>
                                 </font>
                             </p>
                         <% else %>
