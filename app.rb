@@ -5,7 +5,7 @@ require 'sinatra/activerecord'
 require 'net/ftp'
 
 configure :production do
-  set :database, {adapter: 'postgresql', encoding: 'unicode', database: 'rng_prod', pool: 2, host: ENV['FTP_HOST'], port: 5432, username: ENV['FTP_USER'], password: ENV['FTP_PASS']}
+  set :database, {adapter: 'postgresql', encoding: 'unicode', database: 'rng_prod', pool: 2, host: ENV['DB_HOST'], port: 5432, username: ENV['DB_USER'], password: ENV['DB_PASS']}
 end
 
 class Book < ActiveRecord::Base
@@ -52,8 +52,8 @@ end
 
 get '/download' do
   book = Book.find(params[:book].to_i)
-  ftp = Net::FTP.new('188.243.135.145')
-  ftp.login
+  ftp = Net::FTP.new(ENV['FTP_HOST'])
+  ftp.login(ENV['FTP_USER'], ENV['FTP_PASS'])
   begin
     ftp.getbinaryfile("#{book.filename}", "public/#{book.filename}")
     book.update(d_count: book.d_count+1)
